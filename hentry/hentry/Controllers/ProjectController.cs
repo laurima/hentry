@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
+using MySql.Data;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using hentry.Models;
+using System.Diagnostics;
 
 namespace hentry.Controllers
 {
@@ -52,6 +55,7 @@ namespace hentry.Controllers
             {
                 db.project.Add(project);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -78,10 +82,11 @@ namespace hentry.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,identifier,name,info,start_date,end_date,created,modified")] project project)
+        public ActionResult Edit([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,created,modified")] project project)
         {
             if (ModelState.IsValid)
             {
+                Debug.WriteLine(db.project);
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
