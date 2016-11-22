@@ -9,7 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using hentry.Models;
-using System.Diagnostics;
+
 
 namespace hentry.Controllers
 {
@@ -86,7 +86,6 @@ namespace hentry.Controllers
         {
             if (ModelState.IsValid)
             {
-                Debug.WriteLine(db.project);
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
