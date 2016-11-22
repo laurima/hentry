@@ -46,7 +46,7 @@ namespace hentry.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,identifier,name,info,start_date,end_date,created,modified")] project project)
+        public ActionResult Create([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,created,modified")] project project)
         {
             if (ModelState.IsValid)
             {

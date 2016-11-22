@@ -17,6 +17,7 @@ namespace hentry.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public project()
         {
+            this.budget = 0m;
             this.approver = new HashSet<approver>();
             this.projectmanager = new HashSet<projectmanager>();
             this.projectworker = new HashSet<projectworker>();
@@ -27,6 +28,7 @@ namespace hentry.Models
         public string identifier { get; set; }
         public string name { get; set; }
         public string info { get; set; }
+        public decimal budget { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
         public System.DateTime created { get; set; }
