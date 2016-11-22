@@ -11,7 +11,8 @@ namespace hentry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class project
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,15 +24,33 @@ namespace hentry.Models
             this.projectworker = new HashSet<projectworker>();
             this.task = new HashSet<task>();
         }
-    
+
         public int id { get; set; }
+        [Display(Name = "Identifier")]
+        [MaxLength(10)]
         public string identifier { get; set; }
+        [Display(Name = "Name")]
+        [MaxLength(50)]
         public string name { get; set; }
+        [Display(Name = "Additional info")]
+        [MaxLength(250)]
         public string info { get; set; }
+        [Display(Name = "Budget")]
+        [DataType(DataType.Currency)]
         public decimal budget { get; set; }
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime start_date { get; set; }
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime end_date { get; set; }
+        [Display(Name = "Project created")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy H:mm:ss}", ApplyFormatInEditMode = true)]
         public System.DateTime created { get; set; }
+        [Display(Name = "Last modified")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy H:mm:ss}", ApplyFormatInEditMode = true)]
         public System.DateTime modified { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
