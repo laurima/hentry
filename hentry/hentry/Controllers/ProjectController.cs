@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
-using MySql.Data;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
