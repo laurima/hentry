@@ -39,11 +39,9 @@ namespace hentry.Models
         [DataType(DataType.Currency)]
         public decimal budget { get; set; }
         [Display(Name = "Start Date")]
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime start_date { get; set; }
         [Display(Name = "End Date")]
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime end_date { get; set; }
         [Display(Name = "Project created")]

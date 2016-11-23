@@ -49,6 +49,10 @@ namespace hentry.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,created,modified")] project project)
         {
+
+            project.created = DateTime.Now;
+            project.modified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.project.Add(project);
@@ -63,6 +67,7 @@ namespace hentry.Controllers
         // GET: Project/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -72,6 +77,7 @@ namespace hentry.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(project);
         }
 
@@ -82,6 +88,8 @@ namespace hentry.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,created,modified")] project project)
         {
+            project.modified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;
