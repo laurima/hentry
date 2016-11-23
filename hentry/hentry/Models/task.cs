@@ -11,7 +11,8 @@ namespace hentry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class task
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,15 +22,25 @@ namespace hentry.Models
         }
     
         public int id { get; set; }
+        [Display(Name = "Task")]
         public string name { get; set; }
+        [Display(Name = "Created by")]
         public int creator { get; set; }
+        [Display(Name = "Project")]
         public int project { get; set; }
+        [Display(Name = "Status")]
         public int status { get; set; }
+        [Display(Name = "Estimated work")]
         public Nullable<long> estimate_work { get; set; }
+        [Display(Name = "Estimated cost")]
         public Nullable<long> estimate_cost { get; set; }
+        [Display(Name = "Actual work")]
         public Nullable<long> actual_work { get; set; }
+        [Display(Name = "Actual cost")]
         public Nullable<long> actual_cost { get; set; }
+        [Display(Name = "Created")]
         public System.DateTime created { get; set; }
+        [Display(Name = "Last modified")]
         public System.DateTime modified { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

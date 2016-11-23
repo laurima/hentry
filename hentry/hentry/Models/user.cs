@@ -11,7 +11,8 @@ namespace hentry.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,12 +27,19 @@ namespace hentry.Models
         }
     
         public int id { get; set; }
+        [Display(Name = "User")]
         public string email { get; set; }
+        [ScaffoldColumn(false)]
         public string pass { get; set; }
+        [ScaffoldColumn(false)]
         public string salt { get; set; }
+        [Display(Name = "First name")]
         public string fname { get; set; }
+        [Display(Name = "Last name")]
         public string lname { get; set; }
+        [Display(Name = "Created")]
         public System.DateTime created { get; set; }
+        [Display(Name = "Last modified")]
         public System.DateTime modified { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

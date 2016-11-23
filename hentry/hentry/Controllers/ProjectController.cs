@@ -86,13 +86,15 @@ namespace hentry.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,created,modified")] project project)
+        public ActionResult Edit([Bind(Include = "id,identifier,name,info,budget,start_date,end_date,modified")] project project)
         {
+
             project.modified = DateTime.Now;
 
             if (ModelState.IsValid)
             {
                 db.Entry(project).State = EntityState.Modified;
+                db.Entry(project).Property("created").IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

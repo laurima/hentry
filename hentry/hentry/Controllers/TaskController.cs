@@ -15,10 +15,18 @@ namespace hentry.Controllers
         private main_database db = new main_database();
 
         // GET: Task
-        public ActionResult Index()
+        public ActionResult Index(int? project)
         {
-            var task = db.task.Include(t => t.project1).Include(t => t.status1).Include(t => t.user);
-            return View(task.ToList());
+            if (project == null)
+            {
+                var tasks = db.task.Include(t => t.project1).Include(t => t.status1).Include(t => t.user);
+                return View(tasks.ToList());
+            } else
+            {
+                var tasks = from t in db.task where t.project == project select t;
+                return View(tasks.ToList());
+            }
+            
         }
 
         // GET: Task/Details/5
@@ -52,11 +60,15 @@ namespace hentry.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,creator,project,status,estimate_work,estimate_cost,actual_work,actual_cost,created,modified")] task task)
         {
+
+            task.created = DateTime.Now;
+            task.modified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.task.Add(task);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { project = task.project });
             }
 
             ViewBag.project = new SelectList(db.project, "id", "identifier", task.project);
@@ -88,13 +100,17 @@ namespace hentry.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,creator,project,status,estimate_work,estimate_cost,actual_work,actual_cost,created,modified")] task task)
+        public ActionResult Edit([Bind(Include = "id,name,creator,project,status,estimate_work,estimate_cost,actual_work,actual_cost,modified")] task task)
         {
+
+            task.modified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Entry(task).State = EntityState.Modified;
+                db.Entry(task).Property("created").IsModified = false;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { project = task.project });
             }
             ViewBag.project = new SelectList(db.project, "id", "identifier", task.project);
             ViewBag.status = new SelectList(db.status, "id", "status1", task.status);
@@ -125,7 +141,7 @@ namespace hentry.Controllers
             task task = db.task.Find(id);
             db.task.Remove(task);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { project = task.project });
         }
 
         protected override void Dispose(bool disposing)

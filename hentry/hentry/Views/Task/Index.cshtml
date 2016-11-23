@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { project = this.Request["project"] })
 </p>
 <table class="table">
     <tr>
@@ -30,16 +30,7 @@
             @Html.DisplayNameFor(model => model.created)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.modified)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.project1.identifier)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.status1.status1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.user.email)
         </th>
         <th></th>
     </tr>
@@ -65,21 +56,12 @@
             @Html.DisplayFor(modelItem => item.created)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.modified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.project1.identifier)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.status1.status1)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.user.email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.id, project=item.project }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id, project = item.project }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id, project = item.project })
         </td>
     </tr>
 }

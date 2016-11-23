@@ -32,9 +32,7 @@
         <th>
             @Html.DisplayNameFor(model => model.created)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.modified)
-        </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -62,7 +60,7 @@
             @Html.DisplayFor(modelItem => item.created)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.modified)
+            @Html.ActionLink("Go to tasks", "Index", "Task", new { project = item.id }, null)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

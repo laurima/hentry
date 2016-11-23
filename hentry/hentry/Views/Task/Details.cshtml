@@ -93,6 +93,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id, project = this.Request.QueryString["project"] }) |
+    @Html.ActionLink("Back to List", "Index", new { project = this.Request.QueryString["project"] })
 </p>
