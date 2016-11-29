@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -184,8 +185,52 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\admin.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\approver.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\aspnetusers.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\assignee.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\project.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectController.cs" />
+    <Compile Include="Models\projectmanager.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectModels.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectModels.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectModels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectModels.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\projectworker.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\status.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\task.cs">
+      <DependentUpon>ProjectModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -196,8 +241,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\ProjectModels.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProjectModels.edmx</DependentUpon>
+      <LastGenOutput>ProjectModels.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ProjectModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProjectModels.edmx</DependentUpon>
+      <LastGenOutput>ProjectModels.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\ProjectModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProjectModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ProjectModels.edmx.diagram">
+      <DependentUpon>ProjectModels.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -244,6 +306,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Task\Create.cshtml" />
+    <Content Include="Views\Task\Delete.cshtml" />
+    <Content Include="Views\Task\Details.cshtml" />
+    <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
