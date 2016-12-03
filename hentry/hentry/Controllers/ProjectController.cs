@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using hentry.Models;
+using System.Web.Security;
 
 namespace hentry.Models
 {
+    [Authorize(Roles = "Admin, Projectmanager, Projectworker")]
     public class ProjectController : Controller
     {
         private acsm_ff4a6a83158a8e0Entities db = new acsm_ff4a6a83158a8e0Entities();
@@ -17,6 +19,20 @@ namespace hentry.Models
         // GET: Project
         public ActionResult Index()
         {
+            ViewBag.EditRights = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var roles = Roles.GetRolesForUser(User.Identity.Name);
+                if (roles.Contains<string>("Admin") || roles.Contains<string>("Projectmanager"))
+                {
+                    ViewBag.EditRights = true;
+                    return View(db.project.ToList());
+                }
+                else
+                {
+                    return View(db.project.ToList());
+                }
+            }
             return View(db.project.ToList());
         }
 
