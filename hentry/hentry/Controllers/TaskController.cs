@@ -10,6 +10,7 @@ using hentry.Models;
 
 namespace hentry.Models
 {
+    [Authorize(Roles = "Admin, Projectmanager, Projectworker")]
     public class TaskController : Controller
     {
         private acsm_ff4a6a83158a8e0Entities db = new acsm_ff4a6a83158a8e0Entities();
