@@ -64,15 +64,15 @@ namespace hentry
                 {
                     if (db.admin.Count(x => x.user == user.Id) == 1)
                     {
-                        roles.Add("admin");
+                        roles.Add("Admin");
                     }
                     if (db.projectmanager.Count(x => x.user == user.Id) == 1)
                     {
-                        roles.Add("projectmanager");
+                        roles.Add("Projectmanager");
                     }
                     if (db.projectworker.Count(x => x.user == user.Id) == 1)
                     {
-                        roles.Add("projectworker");
+                        roles.Add("Projectworker");
                     }
                     
                 }
