@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using hentry.Models;
 using System.Web.Security;
 
-namespace hentry.Models
+namespace hentry.Controllers
 {
     [Authorize(Roles = "Admin, Projectmanager, Projectworker")]
     public class ProjectController : Controller

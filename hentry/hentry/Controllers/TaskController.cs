@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using hentry.Models;
 
-namespace hentry.Models
+namespace hentry.Controllers
 {
     [Authorize(Roles = "Admin, Projectmanager, Projectworker")]
     public class TaskController : Controller
