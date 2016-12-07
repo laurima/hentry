@@ -6,13 +6,18 @@ using hentry.Controllers;
 using Moq;
 using System.Diagnostics;
 using System.Web;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System.Security.Principal;
+using System.Threading;
 
 namespace hentry.Tests.Controllers
 {
     [TestClass]
     public class ProjectControllerTest
     {
+        static IWebDriver driverFF;
+
         [TestMethod]
         public void Admin_Can_View_Create_Project()
         {
@@ -56,5 +61,24 @@ namespace hentry.Tests.Controllers
             Assert.IsTrue(attributes.ToString().Contains("System.Web.Mvc.AuthorizeAttribute"));
         }
 
+        
+        [TestMethod]
+        public void Test_Login_With_Firefox()
+        {
+            // Needs IIS to be started manually first
+            driverFF = new FirefoxDriver();
+            
+            driverFF.Navigate().GoToUrl("http://localhost:3829/Account/Login");
+            driverFF.FindElement(By.Id("Email")).SendKeys("test@email.com");
+            driverFF.FindElement(By.Id("Password")).SendKeys("Kissa123!");
+            driverFF.FindElement(By.Id("Password")).SendKeys(Keys.Enter);
+
+            // Could not find selenium wait
+            Thread.Sleep(5000);
+            Assert.AreEqual("Home Page - Hentry", driverFF.Title);
+            driverFF.Close();
+            driverFF.Quit();
+        }
+        
     }
 }
