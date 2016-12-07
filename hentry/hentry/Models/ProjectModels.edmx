@@ -1,0 +1,775 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="acsm_ff4a6a83158a8e0Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="approver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="project" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="aspnetusers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bool" Nullable="false" />
+          <Property Name="PasswordHash" Type="longtext" />
+          <Property Name="SecurityStamp" Type="longtext" />
+          <Property Name="PhoneNumber" Type="longtext" />
+          <Property Name="PhoneNumberConfirmed" Type="bool" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bool" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" Precision="0" />
+          <Property Name="LockoutEnabled" Type="bool" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="assignee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="task" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="identifier" Type="varchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="info" Type="varchar" MaxLength="250" />
+          <Property Name="budget" Type="decimal" Precision="14" Scale="2" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="modified" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="projectmanager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="project" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="projectworker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="project" Type="int" Nullable="false" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="creator" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="project" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="estimate_work" Type="uint" />
+          <Property Name="estimate_cost" Type="uint" />
+          <Property Name="actual_work" Type="uint" />
+          <Property Name="actual_cost" Type="uint" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="modified" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_admin_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="admin" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_approver_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="approver" Type="Self.approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="approver">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_approver_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="approver" Type="Self.approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="approver">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_assignee_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="assignee" Type="Self.assignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="assignee">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_assignee_task">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="assignee" Type="Self.assignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignee">
+              <PropertyRef Name="task" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectmanager_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projectmanager" Type="Self.projectmanager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projectmanager">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectmanager_user">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="projectmanager" Type="Self.projectmanager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="projectmanager">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectworker_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="projectworker" Type="Self.projectworker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="projectworker">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectworker_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projectworker" Type="Self.projectworker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projectworker">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_status">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="acsm_ff4a6a83158a8e0ModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="approver" EntityType="Self.approver" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="assignee" EntityType="Self.assignee" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="project" EntityType="Self.project" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="projectmanager" EntityType="Self.projectmanager" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="projectworker" EntityType="Self.projectworker" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <EntitySet Name="task" EntityType="Self.task" Schema="acsm_ff4a6a83158a8e0" store:Type="Tables" />
+          <AssociationSet Name="fk_admin_aspnetusers" Association="Self.fk_admin_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="admin" EntitySet="admin" />
+          </AssociationSet>
+          <AssociationSet Name="fk_approver_aspnetusers" Association="Self.fk_approver_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="approver" EntitySet="approver" />
+          </AssociationSet>
+          <AssociationSet Name="fk_approver_project" Association="Self.fk_approver_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="approver" EntitySet="approver" />
+          </AssociationSet>
+          <AssociationSet Name="fk_assignee_aspnetusers" Association="Self.fk_assignee_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="assignee" EntitySet="assignee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_assignee_task" Association="Self.fk_assignee_task">
+            <End Role="task" EntitySet="task" />
+            <End Role="assignee" EntitySet="assignee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectmanager_project" Association="Self.fk_projectmanager_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="projectmanager" EntitySet="projectmanager" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectmanager_user" Association="Self.fk_projectmanager_user">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="projectmanager" EntitySet="projectmanager" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectworker_aspnetusers" Association="Self.fk_projectworker_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="projectworker" EntitySet="projectworker" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectworker_project" Association="Self.fk_projectworker_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="projectworker" EntitySet="projectworker" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_aspnetusers" Association="Self.fk_task_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_project" Association="Self.fk_task_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_status" Association="Self.fk_task_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="acsm_ff4a6a83158a8e0Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_admin_aspnetusers" FromRole="admin" ToRole="aspnetusers" />
+        </EntityType>
+        <EntityType Name="approver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="project" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_approver_aspnetusers" FromRole="approver" ToRole="aspnetusers" />
+          <NavigationProperty Name="project1" Relationship="Self.fk_approver_project" FromRole="approver" ToRole="project" />
+        </EntityType>
+        <EntityType Name="aspnetusers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="admin" Relationship="Self.fk_admin_aspnetusers" FromRole="aspnetusers" ToRole="admin" />
+          <NavigationProperty Name="approver" Relationship="Self.fk_approver_aspnetusers" FromRole="aspnetusers" ToRole="approver" />
+          <NavigationProperty Name="assignee" Relationship="Self.fk_assignee_aspnetusers" FromRole="aspnetusers" ToRole="assignee" />
+          <NavigationProperty Name="projectmanager" Relationship="Self.fk_projectmanager_user" FromRole="aspnetusers" ToRole="projectmanager" />
+          <NavigationProperty Name="projectworker" Relationship="Self.fk_projectworker_aspnetusers" FromRole="aspnetusers" ToRole="projectworker" />
+          <NavigationProperty Name="task" Relationship="Self.fk_task_aspnetusers" FromRole="aspnetusers" ToRole="task" />
+        </EntityType>
+        <EntityType Name="assignee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="task" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_assignee_aspnetusers" FromRole="assignee" ToRole="aspnetusers" />
+          <NavigationProperty Name="task1" Relationship="Self.fk_assignee_task" FromRole="assignee" ToRole="task" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="identifier" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="info" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="budget" Type="Decimal" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <Property Name="modified" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="approver" Relationship="Self.fk_approver_project" FromRole="project" ToRole="approver" />
+          <NavigationProperty Name="projectmanager" Relationship="Self.fk_projectmanager_project" FromRole="project" ToRole="projectmanager" />
+          <NavigationProperty Name="projectworker" Relationship="Self.fk_projectworker_project" FromRole="project" ToRole="projectworker" />
+          <NavigationProperty Name="task" Relationship="Self.fk_task_project" FromRole="project" ToRole="task" />
+        </EntityType>
+        <EntityType Name="projectmanager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="project" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_projectmanager_user" FromRole="projectmanager" ToRole="aspnetusers" />
+          <NavigationProperty Name="project1" Relationship="Self.fk_projectmanager_project" FromRole="projectmanager" ToRole="project" />
+        </EntityType>
+        <EntityType Name="projectworker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="project" Type="Int32" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_projectworker_aspnetusers" FromRole="projectworker" ToRole="aspnetusers" />
+          <NavigationProperty Name="project1" Relationship="Self.fk_projectworker_project" FromRole="projectworker" ToRole="project" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status1" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="task" Relationship="Self.fk_task_status" FromRole="status" ToRole="task" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="creator" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="project" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="estimate_work" Type="Int64" />
+          <Property Name="estimate_cost" Type="Int64" />
+          <Property Name="actual_work" Type="Int64" />
+          <Property Name="actual_cost" Type="Int64" />
+          <Property Name="created" Type="DateTime" Nullable="false" />
+          <Property Name="modified" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="aspnetusers" Relationship="Self.fk_task_aspnetusers" FromRole="task" ToRole="aspnetusers" />
+          <NavigationProperty Name="assignee" Relationship="Self.fk_assignee_task" FromRole="task" ToRole="assignee" />
+          <NavigationProperty Name="project1" Relationship="Self.fk_task_project" FromRole="task" ToRole="project" />
+          <NavigationProperty Name="status1" Relationship="Self.fk_task_status" FromRole="task" ToRole="status" />
+        </EntityType>
+        <Association Name="fk_admin_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="admin" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_approver_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="approver" Type="Self.approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="approver">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_approver_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="approver" Type="Self.approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="approver">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_assignee_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="assignee" Type="Self.assignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="assignee">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectmanager_user">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="projectmanager" Type="Self.projectmanager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="projectmanager">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectworker_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="projectworker" Type="Self.projectworker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="projectworker">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_aspnetusers">
+          <End Role="aspnetusers" Type="Self.aspnetusers" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnetusers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="creator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_assignee_task">
+          <End Role="task" Type="Self.task" Multiplicity="1" />
+          <End Role="assignee" Type="Self.assignee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignee">
+              <PropertyRef Name="task" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectmanager_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projectmanager" Type="Self.projectmanager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projectmanager">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_projectworker_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="projectworker" Type="Self.projectworker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="projectworker">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_task_status">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="task" Type="Self.task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="acsm_ff4a6a83158a8e0Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admin" EntityType="Self.admin" />
+          <EntitySet Name="approver" EntityType="Self.approver" />
+          <EntitySet Name="aspnetusers" EntityType="Self.aspnetusers" />
+          <EntitySet Name="assignee" EntityType="Self.assignee" />
+          <EntitySet Name="project" EntityType="Self.project" />
+          <EntitySet Name="projectmanager" EntityType="Self.projectmanager" />
+          <EntitySet Name="projectworker" EntityType="Self.projectworker" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="task" EntityType="Self.task" />
+          <AssociationSet Name="fk_admin_aspnetusers" Association="Self.fk_admin_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="admin" EntitySet="admin" />
+          </AssociationSet>
+          <AssociationSet Name="fk_approver_aspnetusers" Association="Self.fk_approver_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="approver" EntitySet="approver" />
+          </AssociationSet>
+          <AssociationSet Name="fk_approver_project" Association="Self.fk_approver_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="approver" EntitySet="approver" />
+          </AssociationSet>
+          <AssociationSet Name="fk_assignee_aspnetusers" Association="Self.fk_assignee_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="assignee" EntitySet="assignee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectmanager_user" Association="Self.fk_projectmanager_user">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="projectmanager" EntitySet="projectmanager" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectworker_aspnetusers" Association="Self.fk_projectworker_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="projectworker" EntitySet="projectworker" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_aspnetusers" Association="Self.fk_task_aspnetusers">
+            <End Role="aspnetusers" EntitySet="aspnetusers" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="fk_assignee_task" Association="Self.fk_assignee_task">
+            <End Role="task" EntitySet="task" />
+            <End Role="assignee" EntitySet="assignee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectmanager_project" Association="Self.fk_projectmanager_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="projectmanager" EntitySet="projectmanager" />
+          </AssociationSet>
+          <AssociationSet Name="fk_projectworker_project" Association="Self.fk_projectworker_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="projectworker" EntitySet="projectworker" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_project" Association="Self.fk_task_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+          <AssociationSet Name="fk_task_status" Association="Self.fk_task_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="task" EntitySet="task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="acsm_ff4a6a83158a8e0ModelStoreContainer" CdmEntityContainer="acsm_ff4a6a83158a8e0Entities">
+          <EntitySetMapping Name="admin">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="approver">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.approver">
+              <MappingFragment StoreEntitySet="approver">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="project" ColumnName="project" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnetusers">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.aspnetusers">
+              <MappingFragment StoreEntitySet="aspnetusers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="assignee">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.assignee">
+              <MappingFragment StoreEntitySet="assignee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="task" ColumnName="task" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="project">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.project">
+              <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="identifier" ColumnName="identifier" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projectmanager">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.projectmanager">
+              <MappingFragment StoreEntitySet="projectmanager">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="project" ColumnName="project" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projectworker">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.projectworker">
+              <MappingFragment StoreEntitySet="projectworker">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="project" ColumnName="project" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="status1" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="task">
+            <EntityTypeMapping TypeName="acsm_ff4a6a83158a8e0Model.task">
+              <MappingFragment StoreEntitySet="task">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="project" ColumnName="project" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="estimate_work" ColumnName="estimate_work" />
+                <ScalarProperty Name="estimate_cost" ColumnName="estimate_cost" />
+                <ScalarProperty Name="actual_work" ColumnName="actual_work" />
+                <ScalarProperty Name="actual_cost" ColumnName="actual_cost" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
